@@ -56,14 +56,14 @@ Imagine you're planning a hiking trip and can only carry a limited weight in you
 
 To tackle this problem mathematically, we define:
 
-- **Items**: $ n $ items, each with a value $ v_i $ and weight $ w_i $.
-- **Knapsack Capacity**: Maximum weight $ W $ that the knapsack can carry.
+- **Items**:  $ n $  items, each with a value  $ v_i $  and weight  $ w_i $.
+- **Knapsack Capacity**: Maximum weight  $ W $  that the knapsack can carry.
 
 Our **aim** is to decide which items to include in the knapsack to maximize the total value while staying within the weight **constraint**. We can express this as an **integer programming problem**:
 
-- **Decision Variables**: $ x_i $, where $ x_i = 1 $ if item $ i $ is included in the knapsack, and $ x_i = 0 $ otherwise.
-- **Objective Function**: Maximize $ \sum_{i=1}^n v_i x_i $, which represents the total value of the selected items.
-- **Constraint**: $ \sum_{i=1}^n w_i x_i \leq W $, ensuring the total weight of the selected items doesn't exceed the knapsack's capacity.
+- **Decision Variables**:  $ x_i $ , where  $ x_i = 1 $  if item  $ i $  is included in the knapsack, and  $ x_i = 0 $  otherwise.
+- **Objective Function**: Maximize  $$ \sum_{i=1}^n v_i x_i $$ , which represents the total value of the selected items.
+- **Constraint**:  $$ \sum_{i=1}^n w_i x_i \leq W $$ , ensuring the total weight of the selected items doesn't exceed the knapsack's capacity.
 
 ### Implementation with Python and Gurobi
 
@@ -89,16 +89,13 @@ The transportation problem is a classic optimization problem in operations resea
 
 In the transportation problem, we have:
 
-- A
+- A set of sources  $ i $ where goods are supplied.
+- A set of destinations  $ j $ where goods are demanded.
+- A supply amount  $ s_i $  at each source  $ i $.
+- A demand amount  $ d_j $  at each destination  $ j $.
+- A cost  $ c_{ij} $  associated with transporting one unit of good from source  $ i $  to destination  $ j $.
 
- set of sources $ i $ where goods are supplied.
-
-- A set of destinations $ j $ where goods are demanded.
-- A supply amount $ s_i $ at each source $ i $.
-- A demand amount $ d_j $ at each destination $ j $.
-- A cost $ c_{ij} $ associated with transporting one unit of good from source $ i $ to destination $ j $.
-
-The goal is to determine the quantity $ x_{ij} $ of goods to be transported from each source $ i $ to each destination $ j $ such that the total transportation cost is minimized, all demands are satisfied, and supplies are not exceeded.
+The goal is to determine the quantity  $ x_{ij} $  of goods to be transported from each source  $ i $  to each destination  $ j $ such that the total transportation cost is minimized, all demands are satisfied, and supplies are not exceeded.
 
 ### Assumptions
 
@@ -113,16 +110,16 @@ The linear programming formulation of the transportation problem is as follows:
 ### Objective Function
 
 Minimize the total transportation cost:
-\[ \min Z = \sum_{i=1}^{m} \sum_{j=1}^{n} c_{ij} x_{ij} \]
-where $ m $ is the number of sources, $ n $ is the number of destinations, $ c_{ij} $ is the cost per unit transported from source $ i $ to destination $ j $, and $ x_{ij} $ is the quantity transported.
+$$ \min Z = \sum_{i=1}^{m} \sum_{j=1}^{n} c_{ij} x_{ij} $$
+where  $ m $ is the number of sources,  $ n $  is the number of destinations,  $ c_{ij} $  is the cost per unit transported from source  $ i $  to destination  $ j $ , and  $ x_{ij} $  is the quantity transported.
 
 ### Constraints
 
 1. **Supply Constraints:** Ensure that the total amount transported from each source does not exceed its supply.
-   \[ \sum_{j=1}^{n} x_{ij} \leq s_i \quad \forall i \]
+  $$ \sum_{j=1}^{n} x_{ij} \leq s_i \quad \forall i $$
 2. **Demand Constraints:** Ensure that the total amount transported to each destination meets its demand.
-   \[ \sum_{i=1}^{m} x_{ij} = d_j \quad \forall j \]
+   $$ \sum_{i=1}^{m} x_{ij} = d_j \quad \forall j $$
 3. **Non-negativity Constraints:** The quantities transported must be non-negative.
-   \[ x_{ij} \geq 0 \quad \forall i, \forall j \]
+   $$ x_{ij} \geq 0 \quad \forall i, \forall j $$
 
 **For further great explanation also check this [Link](https://www.imsl.com/blog/solving-transportation-problem)**
