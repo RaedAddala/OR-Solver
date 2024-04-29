@@ -53,10 +53,18 @@ class TransportationSolver(QWidget):
         try:
             supply = list(map(int, self.supply_input.text().split(',')))
             demand = list(map(int, self.demand_input.text().split(',')))
+            if not (all_positive(supply)):
+                raise InvalidInputError("Supply Capacities must be all positive")
+            if not (all_positive(demand)):
+                raise InvalidInputError("Demand Capacities must be all positive")
             cost_dict = {}
-            cost_rows = self.cost_input.text().split(';')
+            cost_rows = self.cost_input.text().strip().split(';')
+            if not (cost_rows[-1]):
+                cost_rows = cost_rows[1:-2]
             for i, row in enumerate(cost_rows):
                 costs = list(map(int, row.split(',')))
+                if not (all_positive(costs)):
+                    raise InvalidInputError("costs Capacities must be all positive")
                 for j, cost in enumerate(costs):
                     cost_dict[(i, j)] = cost
 
@@ -84,5 +92,13 @@ class TransportationSolver(QWidget):
                 self.output_area.setText(result)
             else:
                 self.output_area.setText("No feasible solution found.")
+        
+        except InvalidInputError as e:
+            QMessageBox.critical(self, "Invalid Input Error", str(e))
         except Exception as e:
             QMessageBox.critical(self, "Input Error", "Failed to solve the problem: " + str(e))
+
+class InvalidInputError(Exception):
+    pass
+
+all_positive = lambda lst: all(value >= 0 for value in lst)

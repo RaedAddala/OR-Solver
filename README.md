@@ -81,6 +81,8 @@ Here's how:
 
 ***The transportation problem is a type of `linear programming` problem designed to minimize the cost of distributing a product from M sources to N destinations.***
 
+![Transportation Cost Problem Example](./explanation.png)
+
 The transportation problem is a classic optimization problem in operations research and logistics that seeks to distribute goods or resources from **multiple origins (supply points)** to **multiple destinations (demand points)** in the most cost-effective way while satisfying supply and demand constraints. This problem is applicable in various scenarios, including logistics, supply chain management, and network design.
 
 ### Problem Overview
