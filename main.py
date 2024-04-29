@@ -8,7 +8,7 @@ class MainApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Operations Research Project")
-        self.setGeometry(300, 300, 600, 400)
+        self.setGeometry(200, 100, 1200, 800)
 
         self.stack = QStackedWidget(self)
 

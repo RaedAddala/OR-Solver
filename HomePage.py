@@ -8,6 +8,7 @@ class HomePage(QWidget):
 
     def initUI(self):
         layout = QVBoxLayout()
+        
         title = QPushButton("Home")
         title.setEnabled(False)  # Make it look like a title, not clickable
         

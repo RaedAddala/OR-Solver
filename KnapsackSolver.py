@@ -13,7 +13,11 @@ class KnapsackSolver(QWidget):
         # Layouts
         layout = QVBoxLayout()
         inputLayout = QHBoxLayout()
-        
+        # back button
+        back_button = QPushButton('Back to Home')
+        back_button.clicked.connect(self.gotoHome)
+        layout.addWidget(back_button)
+
         # Labels and input fields
         valuesLabel = QLabel("Values:")
         self.valuesInput = QLineEdit("20,30,40,50")
@@ -45,6 +49,9 @@ class KnapsackSolver(QWidget):
         
         # Set layout
         self.setLayout(layout)
+   
+    def gotoHome(self):
+        self.parent.stack.setCurrentIndex(0)
 
     def solve_knapsack(self):
         try:
