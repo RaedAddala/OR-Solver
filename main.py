@@ -9,14 +9,12 @@ class MainApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Operations Research Project")
-        self.setGeometry(200, 100, 1200, 800)
+        self.setGeometry(360, 120, 1200, 800)
         self.setFont(QFont("Arial", 14))
-        self.setStyleSheet("QMainWindow { background-color: #f0f0f0; }"
-                           "QPushButton { background-color: #0078d7; color: white; font-size: 11pt; border-radius: 5px; }"
-                           "QPushButton:hover { background-color: #005fa3; }"
-                           "QLabel, QLineEdit, QTextEdit, QComboBox { font-size: 10pt; }"
-                           "QTextEdit { background-color: #ffffff; }"
-                           "QLineEdit { border-radius: 3px; padding: 2px; background-color: #ffffff; }")
+        # self.setStyleSheet("QMainWindow { background-color: #f0f0f0; }"
+        #                    " QLineEdit, QTextEdit, QComboBox { font-size: 10pt; }"
+        #                    "QTextEdit { background-color: #ffffff; }"
+        #                    "QLineEdit { border-radius: 3px; padding: 2px; background-color: #ffffff; }")
         
         self.stack = QStackedWidget(self)
         self.home_page = HomePage(self)
