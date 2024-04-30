@@ -16,9 +16,6 @@ class KnapsackSolver(QWidget):
         input_layout = QVBoxLayout()
         main_layout = QVBoxLayout()
         result_layout = QVBoxLayout()
-
-
-
         # Back Button
         back_button = QPushButton("Back")
         back_button.setFixedSize(330, 30)
@@ -45,6 +42,34 @@ class KnapsackSolver(QWidget):
         self.weights_input = QLineEdit("2,5,4,3")
         self.values_input = QLineEdit("20,30,40,50")
 
+        self.capacity_input.setStyleSheet(
+           "QLineEdit {"
+            "   padding: 7px;"
+            "   border: 3px solid #A1D1E9;"
+            "   border-radius: 10px;"
+            "   font-size: 16px;"
+            "}"
+        )
+
+        self.weights_input.setStyleSheet(
+            "QLineEdit {"
+            "   padding: 7px;"
+            "   border: 3px solid #A1D1E9;"
+            "   border-radius: 10px;"
+            "   font-size: 16px;"
+            "}"
+        )
+
+        self.values_input.setStyleSheet(
+            "QLineEdit {"
+            "   padding: 7px;"
+            "   border: 3px solid #A1D1E9;"
+            "   border-radius: 10px;"
+            "   font-size: 16px;"
+            "}"
+        )
+
+        input_layout.setContentsMargins(0, 20, 0, 0)
         input_layout.addWidget(QLabel("Knapsack Capacity (kg):"))
         input_layout.addWidget(self.capacity_input)
         input_layout.addWidget(QLabel("Item Values (comma-separated):"))
@@ -60,7 +85,7 @@ class KnapsackSolver(QWidget):
         solve_kp_btn.setStyleSheet(
              "QPushButton {"
             "   font-size: 17px;"
-            "   border-radius: 10px;"
+            "   border-radius: 13px;"
             "   background-color: #3498db;"
             "   color: #ffffff;"
             "}"
@@ -74,11 +99,19 @@ class KnapsackSolver(QWidget):
 
         # Result
         self.outputArea = QTextEdit()
+        self.outputArea.setStyleSheet(
+            "QTextEdit {"
+            "   padding: 5px;"
+            "   border: 2px solid #A1D1E9;"
+            "   border-radius: 8px;"
+            "   font-size: 16px;"
+            "}"
+        )
         self.outputArea.setReadOnly(True)
         result_layout.addWidget(self.outputArea)
         result_layout.addWidget(back_button)
         result_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        result_layout.setContentsMargins(0, 50, 0, 0)
+        result_layout.setContentsMargins(0, 30, 0, 0)
         main_layout.addLayout(back_layout)
         main_layout.setSpacing(10)
         main_layout.addLayout(input_layout)

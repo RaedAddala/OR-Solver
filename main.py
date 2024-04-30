@@ -9,13 +9,10 @@ class MainApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Operations Research Project")
-        self.setGeometry(120, 120, 1200, 800)
+        self.setGeometry(330, 120, 1200, 800)
         self.setFont(QFont("Arial", 14))
         self.setStyleSheet("QMainWindow { background-color: #E1EFF3; }")
-        #                    " QLineEdit, QTextEdit, QComboBox { font-size: 10pt; }"
-        #                    "QTextEdit { background-color: #ffffff; }"
-        #                    "QLineEdit { border-radius: 3px; padding: 2px; background-color: #ffffff; }")
-        
+       
         self.stack = QStackedWidget(self)
         self.home_page = HomePage(self)
         self.knapsack_solver = KnapsackSolver(self)
