@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import (QWidget, QPushButton, QVBoxLayout, QLabel, QLineEdit, QTextEdit, QMessageBox)
+from PyQt5.QtWidgets import (QWidget, QPushButton, QVBoxLayout, QLabel,QHBoxLayout, QLineEdit, QTextEdit, QMessageBox)
 from gurobipy import Model, GRB
 from PyQt5.QtCore import Qt
 
@@ -16,6 +16,7 @@ class TransportationSolver(QWidget):
         input_layout = QVBoxLayout()
         main_layout = QVBoxLayout()
         result_layout = QVBoxLayout()   
+        buttons_layout = QHBoxLayout()
         # back button
         back_button = QPushButton("Back")
         back_button.setFixedSize(330, 30)
@@ -64,7 +65,7 @@ class TransportationSolver(QWidget):
         )
         # Cost Input
         cost_label = QLabel("Cost Matrix:")
-        self.cost_input = QLineEdit("0,1,10;0,2,4;1,2,2;")
+        self.cost_input = QLineEdit("1,1,10;0,2,4;1,2,2;")
         self.cost_input.setStyleSheet(
             "QLineEdit {"
             "   padding: 5px;"
@@ -102,7 +103,36 @@ class TransportationSolver(QWidget):
             "}"
         )
         solve_button.clicked.connect(self.solve_transportation)
-        result_layout.addWidget(solve_button)
+        buttons_layout.addWidget(solve_button)
+
+
+
+
+ #reset
+        reset_btn = QPushButton('reset data', self)
+        reset_btn.setFixedSize(250, 50)
+        reset_btn.setCursor(Qt.PointingHandCursor)  
+        reset_btn.setStyleSheet(
+             "QPushButton {"
+            "   font-size: 17px;"
+            "   border-radius: 13px;"
+            "   background-color: #C8CECF;"
+            "   color: #ffffff;"
+            "}"
+            "QPushButton:hover {"
+            "   background-color: #BABFC0;"
+            "   font-size:18px;"
+            "}"
+        )
+        reset_btn.clicked.connect(self.reset_data)
+        buttons_layout.addWidget(reset_btn)
+        result_layout.addLayout(buttons_layout)
+
+
+
+
+
+
 
         # Output Text Area
         self.output_area = QTextEdit()
@@ -174,6 +204,12 @@ class TransportationSolver(QWidget):
             QMessageBox.critical(self, "Invalid Input Error", str(e))
         except Exception as e:
             QMessageBox.critical(self, "Input Error", "Failed to solve the problem: " + str(e))
+
+    def reset_data(self):
+            self.cost_input.clear()
+            self.supply_input.clear()
+            self.demand_input.clear()
+            self.output_area.clear()
 
 class InvalidInputError(Exception):
     pass

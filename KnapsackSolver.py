@@ -16,6 +16,7 @@ class KnapsackSolver(QWidget):
         input_layout = QVBoxLayout()
         main_layout = QVBoxLayout()
         result_layout = QVBoxLayout()
+        buttons_layout = QHBoxLayout()
         # Back Button
         back_button = QPushButton("Back")
         back_button.setFixedSize(330, 30)
@@ -93,7 +94,29 @@ class KnapsackSolver(QWidget):
             "}"
         )
         solve_kp_btn.clicked.connect(self.solve_knapsack)
-        result_layout.addWidget(solve_kp_btn)
+        buttons_layout.addWidget(solve_kp_btn)
+
+        #reset
+        reset_btn = QPushButton('reset data', self)
+        reset_btn.setFixedSize(250, 50)
+        reset_btn.setCursor(Qt.PointingHandCursor)  
+        reset_btn.setStyleSheet(
+             "QPushButton {"
+            "   font-size: 17px;"
+            "   border-radius: 13px;"
+            "   background-color: #C8CECF;"
+            "   color: #ffffff;"
+            "}"
+            "QPushButton:hover {"
+            "   background-color: #BABFC0;"
+            "   font-size:18px;"
+            "}"
+        )
+        reset_btn.clicked.connect(self.reset_data)
+        buttons_layout.addWidget(reset_btn)
+        result_layout.addLayout(buttons_layout)
+
+
 
         # Result
         self.outputArea = QTextEdit()
@@ -108,7 +131,7 @@ class KnapsackSolver(QWidget):
         self.outputArea.setReadOnly(True)
         result_layout.addWidget(self.outputArea)
         result_layout.addWidget(back_button)
-        result_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        #result_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         result_layout.setContentsMargins(0, 30, 0, 0)
 
         main_layout.addLayout(back_layout)
@@ -120,6 +143,14 @@ class KnapsackSolver(QWidget):
 
     def gotoHome(self):
         self.parent.stack.setCurrentIndex(0)
+
+    def reset_data(self):
+        self.capacity_input.clear()
+        self.weights_input.clear()
+        self.values_input.clear()
+        self.outputArea.clear()
+
+
 
     def solve_knapsack(self):
         try:
