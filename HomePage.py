@@ -20,14 +20,9 @@ class HomePage(QWidget):
         welcome_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         welcome_label.setStyleSheet(" font-size: 28px; font-weight:bold;color:#2980b9 ") 
 
-
         description_label = QLabel("where we tackle optimization challenges in both Knapsack and Transportation problems to enhance \n decision-making and resource allocation efficiency.")
         description_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         description_label.setStyleSheet("font-weight:semi-weight; font-size: 24px;  ") 
-
-
-
-
 
         btn_knapsack = QPushButton('Knapsack Problem')
         btn_knapsack.setFixedSize(300, 70)
@@ -63,9 +58,11 @@ class HomePage(QWidget):
         )
         btn_transportation.clicked.connect(lambda: self.parent.show_page("Transportation"))
       
-        title_layout.addWidget(title_label, alignment=Qt.AlignmentFlag.AlignTop)  # Align the title_label to the top
+        title_layout.addWidget(title_label, alignment=Qt.AlignmentFlag.AlignTop)
         description_layout.addWidget(welcome_label, alignment=Qt.AlignmentFlag.AlignTop)
         description_layout.addWidget(description_label, alignment=Qt.AlignmentFlag.AlignTop)
+        description_layout.setContentsMargins(50, 0, 50, 50) 
+
         problems_layout.addWidget(btn_knapsack)
         problems_layout.addWidget(btn_transportation)
         problems_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -73,9 +70,8 @@ class HomePage(QWidget):
         main_layout.addLayout(title_layout)
         main_layout.addLayout(description_layout)
         main_layout.addLayout(problems_layout)
-        description_layout.setContentsMargins(50, 0, 50, 50)  # Adjust the top and bottom margins of main_layout
 
-        main_layout.setContentsMargins(50, 0, 50, 50)  # Adjust the top and bottom margins of main_layout
+        main_layout.setContentsMargins(50, 0, 50, 50) 
 
         self.setLayout(main_layout)
 

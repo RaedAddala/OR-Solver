@@ -73,7 +73,7 @@ class TransportationSolver(QWidget):
             "   font-size: 16px;"
             "}"
         )
-      
+        
         input_layout.setContentsMargins(0, 30, 0, 0)
         input_layout.addWidget(instruction_label)
         input_layout.addWidget(supply_label)
@@ -84,8 +84,6 @@ class TransportationSolver(QWidget):
         input_layout.addWidget(self.cost_input)
 
         main_layout.addLayout(input_layout)
-
-
 
         # Solve Button
         solve_button = QPushButton("Solve Transportation Problem",self)

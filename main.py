@@ -10,9 +10,7 @@ class MainApp(QMainWindow):
         super().__init__()
         self.setWindowTitle("Operations Research Project")
         self.setGeometry(330, 120, 1200, 800)
-        self.setFont(QFont("Arial", 14))
         self.setStyleSheet("QMainWindow { background-color: #E1EFF3; }")
-       
         self.stack = QStackedWidget(self)
         self.home_page = HomePage(self)
         self.knapsack_solver = KnapsackSolver(self)

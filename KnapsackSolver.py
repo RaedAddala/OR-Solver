@@ -68,7 +68,6 @@ class KnapsackSolver(QWidget):
             "   font-size: 16px;"
             "}"
         )
-
         input_layout.setContentsMargins(0, 20, 0, 0)
         input_layout.addWidget(QLabel("Knapsack Capacity (kg):"))
         input_layout.addWidget(self.capacity_input)
@@ -78,7 +77,6 @@ class KnapsackSolver(QWidget):
         input_layout.addWidget(self.weights_input)
 
         # Solve
-
         solve_kp_btn = QPushButton('Solve Knapsack', self)
         solve_kp_btn.setFixedSize(250, 50)
         solve_kp_btn.setCursor(Qt.PointingHandCursor)  
@@ -112,10 +110,10 @@ class KnapsackSolver(QWidget):
         result_layout.addWidget(back_button)
         result_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         result_layout.setContentsMargins(0, 30, 0, 0)
+
         main_layout.addLayout(back_layout)
         main_layout.setSpacing(10)
         main_layout.addLayout(input_layout)
-
         main_layout.addLayout(result_layout)
         # Set Layout
         self.setLayout(main_layout)
