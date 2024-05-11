@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedWidget
 from PyQt5.QtGui import QFont, QIcon
 from HomePage import HomePage
-from KnapsackSolver import KnapsackSolver
+from KnapsackGUI import KnapsackGUI
 from TransportationSolver import TransportationSolver
 
 class MainApp(QMainWindow):
@@ -13,7 +13,7 @@ class MainApp(QMainWindow):
         self.setStyleSheet("QMainWindow { background-color: #E1EFF3; }")
         self.stack = QStackedWidget(self)
         self.home_page = HomePage(self)
-        self.knapsack_solver = KnapsackSolver(self)
+        self.knapsack_solver = KnapsackGUI(self)
         self.transportation_solver = TransportationSolver(self)
 
         self.stack.addWidget(self.home_page)
@@ -24,7 +24,7 @@ class MainApp(QMainWindow):
     def show_page(self, page_name):
         if page_name == "Home":
             self.stack.setCurrentIndex(0)
-        elif page_name == "Knapsack":
+        elif page_name == "KnapsackGUI":
             self.stack.setCurrentIndex(1)
         elif page_name == "Transportation":
             self.stack.setCurrentIndex(2)

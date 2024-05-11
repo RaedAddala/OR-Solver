@@ -39,7 +39,7 @@ class HomePage(QWidget):
             "   font-size:21px;"
             "}"
         )
-        btn_knapsack.clicked.connect(lambda: self.parent.show_page("Knapsack"))
+        btn_knapsack.clicked.connect(lambda: self.parent.show_page("KnapsackGUI"))
         
         btn_transportation = QPushButton('Transportation Problem')
         btn_transportation.setFixedSize(300, 70)
