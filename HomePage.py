@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QVBoxLayout, QLab
 from PyQt5.QtCore import Qt
 
 from CriteriaInputDialog import CriteriaInputDialog
+from VariableInputDialog import VariableInputDialog
 
 
 class HomePage(QWidget):
@@ -27,6 +28,7 @@ class HomePage(QWidget):
             "where we tackle optimization challenges in both Selection and Transportation problems to enhance \n decision-making and resource allocation efficiency.")
         description_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         description_label.setStyleSheet("font-weight:semi-weight; font-size: 24px;  ")
+
         # //////////////////////////////////////////////////////////
         btn_selection = QPushButton('Selection Problem')
         btn_selection.setFixedSize(300, 70)
@@ -43,9 +45,9 @@ class HomePage(QWidget):
             "   font-size:21px;"
             "}"
         )
-        # btn_selection.clicked.connect(lambda: self.parent.show_page("Selection"))
         btn_selection.clicked.connect(self.showSelectionPopup)
 
+        # //////////////////////////////////////////////////////////
         btn_transportation = QPushButton('Transportation Problem')
         btn_transportation.setFixedSize(300, 70)
         btn_transportation.setCursor(Qt.PointingHandCursor)
@@ -79,28 +81,51 @@ class HomePage(QWidget):
 
         self.setLayout(main_layout)
 
+    # ////////////////////////////////////////////////////////////////////////
+    # //////////////////////////////////// Selection problem methods 🔽🔽
+    # opens dialog before Selection Problem Page
     def showSelectionPopup(self):
-        # print("Opening CriteriaInputDialog")
+        # fetch the name of the gain coefficient
+        self.parent.selectionProblem.gain_name = self.getGainName()
+        # fetch the number and names of constraints
         dialog = CriteriaInputDialog(self)
-        # print("Dialog created")
+        criteria_names = []
         if dialog.exec_():
-            # print("Dialog accepted")
             num_criteria = int(dialog.getNumCriteria())
-            # print(f"Number of criteria entered: {num_criteria}")
             if num_criteria > 0:
-                criteria_names = self.getCriterialNames(num_criteria)
-                # print(f"Criteria names entered: {criteria_names}")
+                criteria_names = self.getConstraintNames(num_criteria)
                 if criteria_names:
                     self.parent.selectionProblem.setupCriteriaFields(criteria_names)
-                    self.parent.selectionProblem.setupVariableFields(criteria_names)
-                    # print(self.parent.selectionProblem.setupCriteriaFields(criteria_names))
-                    # print("Criteria fields set up")
+        # fetch the number and names of variables
+        dialog = VariableInputDialog(self)
+        if dialog.exec_():
+            num_vars = int(dialog.getNumCriteria())
+            if num_vars > 0:
+                var_names = self.getVariableNames(num_vars)
+                if var_names:
+                    for vname in var_names:
+                        self.parent.selectionProblem.setupVariableFields(criteria_names, vname)
                     self.parent.show_page("Selection")
 
-    def getCriterialNames(self, num_criteria):
+    # methods to fetch the names of constraints, variables
+    # and the gain coefficient
+    def getConstraintNames(self, num_criteria):
         names = []
         for i in range(num_criteria):
             name, ok = QInputDialog.getText(self, f'Enter name for Criterion {i + 1}', 'Criterion Name:')
             if ok:
                 names.append(name)
         return names
+
+    def getVariableNames(self, num_vars):
+        names = []
+        for i in range(num_vars):
+            name, ok = QInputDialog.getText(self, f'Enter name for variable {i + 1}', 'Variable Name:')
+            if ok:
+                names.append(name)
+        return names
+
+    def getGainName(self):
+        name, ok = QInputDialog.getText(self, f'Enter name for gain', 'Gain Name:')
+        return name if ok else "Gain"
+    # //////////////////////////////////// Selection problem methods 🔼🔼
