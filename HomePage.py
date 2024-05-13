@@ -112,7 +112,7 @@ class HomePage(QWidget):
     def getConstraintNames(self, num_criteria):
         names = []
         for i in range(num_criteria):
-            name, ok = QInputDialog.getText(self, f'Enter name for Criterion {i + 1}', 'Criterion Name:')
+            name, ok = QInputDialog.getText(self, f'constraint{i + 1}', f'Constraint {i + 1} Name:')
             if ok:
                 names.append(name)
         return names
@@ -120,7 +120,7 @@ class HomePage(QWidget):
     def getVariableNames(self, num_vars):
         names = []
         for i in range(num_vars):
-            name, ok = QInputDialog.getText(self, f'Enter name for variable {i + 1}', 'Variable Name:')
+            name, ok = QInputDialog.getText(self, f'var{i + 1}', f'Variable {i + 1} Name:')
             if ok:
                 names.append(name)
         return names

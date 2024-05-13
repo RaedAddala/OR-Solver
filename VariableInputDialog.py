@@ -9,11 +9,13 @@ class VariableInputDialog(QDialog):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle('Variable Input')
+        self.setWindowTitle('Variables')
+        self.setMinimumWidth(250)
+
         layout = QVBoxLayout()
 
         self.num_criteria_edit = QLineEdit()
-        self.num_criteria_edit.setPlaceholderText('Enter number of variables')
+        self.num_criteria_edit.setPlaceholderText('3')
 
         self.ok_button = QPushButton('OK')
         self.ok_button.clicked.connect(self.accept)
@@ -23,6 +25,30 @@ class VariableInputDialog(QDialog):
         layout.addWidget(self.ok_button)
 
         self.setLayout(layout)
+        # Apply styles
+        self.setStyleSheet("""
+                    CriteriaInput {
+                        background-color: #f0f0f0;
+                        padding: 10px;
+                        width:500px;
+                    }
+                    QLineEdit {
+                        background-color: white;
+                        border: 1px solid #ccc;
+                        border-radius: 3px;
+                        padding: 5px;
+                    }
+                    QPushButton {
+                        background-color: #3498db;
+                        color: white;
+                        border: none;
+                        border-radius: 3px;
+                        padding: 5px 10px;
+                    }
+                    QPushButton:hover {
+                        background-color: #2980b9;
+                    }
+                """)
 
     def getNumCriteria(self):
         # print("Getting number of criteria")
@@ -31,22 +57,3 @@ class VariableInputDialog(QDialog):
             # print(f"Number of criteria entered: {num_criteria}")
             return num_criteria
         return 0
-
-    def accept(self):
-        # if self.name_edit.text() == '':
-        #     QMessageBox.critical(
-        #         self, 'Error', 'Please enter the celebrity name.')
-        # elif self.salary_edit.text() == '' or not self.salary_edit.text().replace('.', '', 1).isdigit():
-        #     QMessageBox.critical(
-        #         self, 'Error', 'Please enter a valid salary (decimal number).')
-        # elif self.mass_edit.text() == '' or not self.mass_edit.text().replace('.', '', 1).isdigit():
-        #     QMessageBox.critical(
-        #         self, 'Error', 'Please enter a valid mass (decimal number).')
-        # elif self.value_added_edit.text() == '' or not self.value_added_edit.text().replace('.', '',
-        #                                                                                     1).isdigit() or int(
-        #     self.value_added_edit.text()) > 100:
-        #     QMessageBox.critical(
-        #         self, 'Error', 'Please enter a valid popularity index (decimal number <= 100).')
-        # else:
-        # print("clicked accept")
-        super().accept()

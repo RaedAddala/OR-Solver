@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, \
-    QListWidget, QMessageBox
+    QListWidget, QMessageBox, QFrame
 
 from gurobipy import GRB
 import gurobipy as gp
@@ -15,6 +15,9 @@ style_sheet = """
         border: 1px solid #ccc; /* Light gray border */
         border-radius: 3px;
         padding: 5px;
+    }
+    QLabel {
+        background-color:none;
     }
     QLineEdit:focus {
         border-color: #33a6cc; /* Focus color */
@@ -32,46 +35,33 @@ style_sheet = """
     QPushButton:pressed {
         background-color: #496989; /* Even darker purple */
     }
-    QPushButton.remove_btn {
-        background-color: #FF4D4D; /* Red */
-        color: white;
-    }
-
-    SolveButton:pressed {
-        background-color: #C6EBC5; /* Green */
-        color: white;
-    }
-    DeleteButton{
-        background-color:#DD5746
-    }
-    DeleteButton:hover{
-    background-color:rgb(190,39,39)
-    }
-    DeleteButton:pressed{
-        background-color:black
-    }"""
+    """
 
 
 class SelectionPrblmUI(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.summary_text = None
-        self.summary_label = None
-        self.find_celebrity_list_button = None
-        self.solve_button = None
-        self.main_layout = None
+        self.parent = parent
         self.constraints_layout = QHBoxLayout()
         self.variables_layout = QVBoxLayout()
-        self.criteria_edits = []
         self.criteria_labels = []
+        self.summary_label = None
+        self.summary_text = None
+        self.solve_button = None
+        self.criteria_edits = []
         self.variable_edits = {}
+        self.main_layout = None
         self.gain_name = ""
-        self.parent = parent
         self.initUI()
 
     def initUI(self):
         self.setWindowTitle('Selection Problem')
         self.resize(800, 500)
+
+        line = QFrame()
+        line.setFrameShape(QFrame.HLine)
+        line.setFrameShadow(QFrame.Sunken)
+        line.setStyleSheet("background-color:none;")
 
         home_button = QPushButton(
             'Go back to Home Page')
@@ -82,30 +72,53 @@ class SelectionPrblmUI(QWidget):
         # solve button widget
         self.solve_button = QPushButton('Solve')
         self.solve_button.clicked.connect(self.solve_selection)
+        self.solve_button.setStyleSheet("""
+            background-color: #C6EBC5; /* Green */
+            color: black;
+            padding:16px;
+        """)
 
         # Summary widgets
         self.summary_label = QLabel('Selection Result :')
         self.summary_text = QListWidget()
+        self.summary_label.setStyleSheet("font-size:22px;")
 
         # Main layout
         self.main_layout = QVBoxLayout()
-        self.main_layout.addWidget(home_button)
+        c_title = QLabel("Constraints")
+        c_title.setStyleSheet("font-size:22px;")
+        self.main_layout.addWidget(c_title)
         self.main_layout.addLayout(self.constraints_layout)
+        self.main_layout.addWidget(line)
+        v_title = QLabel("Variables")
+        v_title.setStyleSheet("font-size:22px;")
+        self.main_layout.addWidget(v_title)
         self.main_layout.addLayout(self.variables_layout)
         self.main_layout.addWidget(self.solve_button)
         self.main_layout.addWidget(self.summary_label)
         self.main_layout.addWidget(self.summary_text)
+        self.main_layout.addWidget(home_button)
 
         self.setLayout(self.main_layout)
+        self.setStyleSheet(style_sheet)
 
     # returns to home
     def open_homepage(self):
+        self.criteria_labels = []
+        self.summary_label = None
+        self.summary_text = None
+        self.solve_button = None
+        self.criteria_edits = []
+        self.variable_edits = {}
+        self.main_layout = None
+        self.gain_name = ""
         self.parent.stack.setCurrentIndex(0)
 
     # creates fields to input the max of each constraint
     def setupCriteriaFields(self, criteria_names):
         for name in criteria_names:
             label = QLabel(f'Upper limit for {name}:')
+            label.setStyleSheet("font-size:18px;")
             edit = QLineEdit()
             criteria_layout = QHBoxLayout()
             criteria_layout.addWidget(label)
@@ -118,20 +131,24 @@ class SelectionPrblmUI(QWidget):
     def setupVariableFields(self, criteria_names, variable_name="placeholder"):
         self.variable_edits[str(variable_name)] = {}
         vlabel = QLabel(variable_name)
+        vlabel.setStyleSheet("font-style:bolder;font-size:18px;")
         self.variables_layout.addWidget(vlabel)
         vedit_layout = QHBoxLayout()
         constraint_edits = []
         for name in criteria_names:
-            clabel = QLabel(f'{name}:')
+            clabel = QLabel(name)
             cedit = QLineEdit()
             constraint_edits.append(cedit)
             criteria_layout = QVBoxLayout()
             criteria_layout.addWidget(clabel)
             criteria_layout.addWidget(cedit)
             vedit_layout.addLayout(criteria_layout)
+
         vgain_layout = QVBoxLayout()
-        vgain_layout.addWidget(QLabel(self.gain_name))
         gain_edit = QLineEdit()
+        gain_label = QLabel(self.gain_name)
+        gain_label.setStyleSheet("font-style:italic;")
+        vgain_layout.addWidget(gain_label)
         vgain_layout.addWidget(gain_edit)
         vedit_layout.addLayout(vgain_layout)
         self.variable_edits[str(variable_name)]["constraints"] = constraint_edits
@@ -206,11 +223,10 @@ class SelectionPrblmUI(QWidget):
             if var.X > 0.5:
                 selected_vars.append(var_name)
         if selected_vars:
-            self.summary_text.addItem("Selection :")
             for s in selected_vars:
                 self.summary_text.addItem(s)
         else:
-            self.summary_text.addItem("No selected.")
+            self.summary_text.addItem("None selected.")
 
 
 class InvalidInputError(Exception):
@@ -222,7 +238,7 @@ all_positive = lambda lst: all(value >= 0 for value in lst)
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     # apply styles
-    app.setStyleSheet(style_sheet)
+    # app.setStyleSheet(style_sheet)
     window = SelectionPrblmUI()
     window.show()
     sys.exit(app.exec_())
